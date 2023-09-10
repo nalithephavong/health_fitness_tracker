@@ -62,7 +62,7 @@ export default function SignInSide() {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <img src='/images/orange.png' width={24}/>
+              <img src='/Logo.png' width={24}/>
             </Avatar>
             <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }} >
               {AppConfig.title}

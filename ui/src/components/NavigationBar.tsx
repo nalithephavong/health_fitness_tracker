@@ -32,6 +32,11 @@ function NavigationBar() {
         setAnchorElNav(null);
     };
 
+    const handleClickNavMenu = (link:string) => {
+        if (link) router.push(link);
+        setAnchorElNav(null);
+    };
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
@@ -47,7 +52,7 @@ function NavigationBar() {
                 <Toolbar disableGutters>
                     <IconButton onClick={() => router.push("/")} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, p: 0 }}>
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <img src='/images/orange.png' width={24}/>
+                            <img src='/Logo.png' width={24}/>
                         </Avatar>
                     </IconButton>
                     <Typography
@@ -70,35 +75,35 @@ function NavigationBar() {
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
-                        size="large"
-                        aria-label="account of current user"
-                        aria-controls="menu-appbar"
-                        aria-haspopup="true"
-                        onClick={handleOpenNavMenu}
-                        color="inherit"
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="inherit"
                         >
                         <MenuIcon />
                         </IconButton>
                         <Menu
-                        id="menu-appbar"
-                        anchorEl={anchorElNav}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-                        open={Boolean(anchorElNav)}
-                        onClose={handleCloseNavMenu}
-                        sx={{
-                            display: { xs: 'block', md: 'none' },
-                        }}
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{
+                                display: { xs: 'block', md: 'none' },
+                            }}
                         >
                         {AppConfig.nav_bar_pages.map((page) => (
-                            <MenuItem key={page.label} onClick={handleCloseNavMenu}>
+                            <MenuItem key={page.label} onClick={() => handleClickNavMenu(page.link)}>
                             <Typography textAlign="center">{page.label}</Typography>
                             </MenuItem>
                         ))}
@@ -106,7 +111,7 @@ function NavigationBar() {
                     </Box>
                     <IconButton onClick={() => router.push("/")} sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, p: 0 }}>
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <img src='/images/orange.png' width={24}/>
+                            <img src='/Logo.png' width={24}/>
                         </Avatar>
                     </IconButton>
                     <Typography
@@ -131,7 +136,7 @@ function NavigationBar() {
                         {AppConfig.nav_bar_pages.map((page) => (
                         <Button
                             key={page.label}
-                            onClick={handleCloseNavMenu}
+                            onClick={() => handleClickNavMenu(page.link)}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
                             {page.label}
@@ -146,20 +151,20 @@ function NavigationBar() {
                         </IconButton>
                         </Tooltip>
                         <Menu
-                        sx={{ mt: '45px' }}
-                        id="menu-appbar"
-                        anchorEl={anchorElUser}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={Boolean(anchorElUser)}
-                        onClose={handleCloseUserMenu}
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
                         >
                         {AppConfig.nav_bar_menu.map((setting) => (
                             <MenuItem key={setting.label} onClick={() => handleClickUserMenu(setting.link)}>
