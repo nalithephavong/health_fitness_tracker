@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateRecord = exports.deleteRecord = exports.createRecord = exports.getRecords = void 0;
+exports.searchFoods = exports.updateRecord = exports.deleteRecord = exports.createRecord = exports.getRecords = void 0;
+const axios_1 = __importDefault(require("axios"));
 const health_model_1 = require("../models/health-model");
 const records_1 = __importDefault(require("../data/records"));
 const records_2 = require("../data/records");
@@ -80,4 +81,25 @@ const updateRecord = (req, res, next) => {
     });
 };
 exports.updateRecord = updateRecord;
+const searchFoods = (req, res, next) => {
+    let url = process.env.API_URL + "foods/search";
+    let query = req.params.query;
+    axios_1.default.get(url, {
+        params: {
+            api_key: process.env.API_KEY,
+            query: query || ""
+        }
+    })
+        .then((response) => {
+        console.log(response.data);
+        return res.status(200);
+    })
+        .catch((error) => {
+        console.log(error);
+        return res.status(400).json({
+            error: `${error}`
+        });
+    });
+};
+exports.searchFoods = searchFoods;
 // #endregion

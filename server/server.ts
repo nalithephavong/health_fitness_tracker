@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { json } from 'body-parser';
 
-import ordersRoutes from './routes/health-route';
+import healthRoutes from './routes/health-route';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ app.use(cors());
 
 app.use(json());
 
-app.use('/health', ordersRoutes);
+app.use('/health', healthRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.json({message:'Simple Express Server'});

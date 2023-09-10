@@ -1,8 +1,14 @@
 import { Router } from 'express';
-import { createRecord, deleteRecord, getRecords, updateRecord, searchFoods } from '../controllers/health-controller';
+import { 
+    createRecord, 
+    deleteRecord, 
+    getRecords, 
+    updateRecord, 
+    searchFoods 
+} from '../controllers/health-controller';
 
 const router = Router();
-router.get('/search', searchFoods);
+router.get('/search/:query', searchFoods);
 router.post('/', createRecord);
 router.get('/', getRecords);
 router.patch('/:id', updateRecord);

@@ -124,12 +124,22 @@ export const updateRecord = (req: UpdateRecordRequest, res: Response, next: Next
 }
 
 export const searchFoods = (req: Request, res: Response, next: NextFunction) => {
-    axios.get(process.env.API_URL || "")
+    let url = process.env.API_URL + "foods/search";
+    let query = req.params.query;
+
+    axios.get(url, {
+        params: {
+            api_key: process.env.API_KEY,
+            query: query || ""
+        }
+    })
     .then((response) => {
-        return response;
+        return res.status(200).json(response.data);
     })
     .catch((error) => {
-        console.log(error);
+        return res.status(400).json({
+            error: `${error}`
+        });
     });
 }
 // #endregion
