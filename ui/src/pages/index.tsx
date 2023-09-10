@@ -11,7 +11,6 @@ import {
   Box,
   Grid,
   Typography,
-  SvgIcon
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { useRouter } from 'next/router';
@@ -64,7 +63,7 @@ export default function SignInSide() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <img src='/Logo.png' width={24}/>
             </Avatar>
-            <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }} >
+            <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold', fontFamily: 'monospace', letterSpacing: '.2rem' }} >
               {AppConfig.title}
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
