@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import axios from 'axios';
+
 import { Record } from '../models/health-model';
 import records from '../data/records';
 import { Meals, MealTypes } from '../data/records';
@@ -118,6 +120,16 @@ export const updateRecord = (req: UpdateRecordRequest, res: Response, next: Next
 
     return res.status(200).json({
         message: `Record ${id} updated.`
+    });
+}
+
+export const searchFoods = (req: Request, res: Response, next: NextFunction) => {
+    axios.get(process.env.API_URL || "")
+    .then((response) => {
+        return response;
+    })
+    .catch((error) => {
+        console.log(error);
     });
 }
 // #endregion
