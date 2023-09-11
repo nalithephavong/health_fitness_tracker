@@ -30,18 +30,20 @@ Then, run the ui by navigating to the `ui` folder and running: ```npm run dev```
 On startup, the landing page will be displayed. Click the `Sign In` button to enter the website.
 
 <p align="center">
-<img width="700" alt="landing page" src="https://github.com/nalithephavong/manage_orders_sample_app/assets/54182038/899dd8e8-a109-4ef4-abf5-cd954119c4ce">
+<img width="700" alt="landing page" src="https://github.com/nalithephavong/health_fitness_tracker/assets/54182038/b24f24f9-d83c-48e7-aff2-7f62534da162">
 </p>
 
 From the Food Page, users will have an overview of today's food entries. Food items can be added, deleted, and updated using the toolbar buttons.
 
 <p align="center">
-<img width="800" alt="orders" src="https://github.com/nalithephavong/manage_orders_sample_app/assets/54182038/05b800ed-e1fd-4e4a-8677-4e1a075c40a9">
+<img width="800" alt="food" src="https://github.com/nalithephavong/health_fitness_tracker/assets/54182038/0c8a19a6-5a5a-49ea-9a77-15638fc9a6f4">
 </p>
 
 When adding an item, use the search functionality to directly connect to the USDA Food Database to retrieve items:
 
-
+<p align="center">
+<img width="800" alt="food" src="https://github.com/nalithephavong/health_fitness_tracker/assets/54182038/58974624-e9cb-411c-b813-f1227da8a406">
+</p>
 
 The End: 
 <p align="center">
