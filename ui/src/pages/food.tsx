@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import { 
     Container,
-    Paper 
+    Paper,
+    Typography,
+    Button,
 } from "@mui/material";
+import { useTheme } from '@mui/material/styles';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 import Layout from "@/layouts/layout";
 import CustomTable from "@/components/CustomTable";
@@ -37,12 +42,6 @@ const tableHeader: HeaderCellType[] = [
         label: 'Name',
     },
     {
-        id: 'calories',
-        numeric: true,
-        disablePadding: false,
-        label: 'Calories',
-    },
-    {
         id: 'amount',
         numeric: true,
         disablePadding: false,
@@ -53,6 +52,12 @@ const tableHeader: HeaderCellType[] = [
         numeric: true,
         disablePadding: false,
         label: 'Serving',
+    },
+    {
+        id: 'calories',
+        numeric: true,
+        disablePadding: false,
+        label: 'Calories',
     },
     {
         id: 'status',
@@ -154,7 +159,7 @@ const ordersStatusTypes:StatusType[] = [
     {
         id: "Planned",
         label: "Planned",
-        color: "info"
+        color: "secondary"
     },
 ];
 
@@ -162,17 +167,19 @@ const tableSections: SectionType[] = [
     { label: "Breakfast", id: "breakfast" },
     { label: "Lunch", id: "lunch" },
     { label: "Dinner", id: "dinner" },
-    { label: "Snack 1", id: "snack1" },
-    { label: "Snack 2", id: "snack2" },
-    { label: "Snack 3", id: "snack3" }
+    { label: "Snacks", id: "snack1" }
 ];
 
 export default function Food () {
     const [data, setData] = useState<DataType | null>(null);
     const [refresh, setRefresh] = useState(false);
+    const [currentDate, setCurrentDate] = useState(new Date());
+
+    const theme = useTheme();
 
     useEffect(() => {
-        fetch(`${AppConfig.apiUrl}/health`)
+        let dateString = currentDate.toISOString().split('T')[0];
+        fetch(`${AppConfig.apiUrl}/health?datestring=${dateString}`)
         .then((res) => {
           return res.json();
         })
@@ -185,7 +192,7 @@ export default function Food () {
           console.error(err);
           setRefresh(false);
         });
-      }, [refresh]);
+    }, [refresh]);
 
     const getTableSection = (data: DataType) => {
         const items = tableSections.map((table) => {
@@ -209,6 +216,20 @@ export default function Food () {
         return items;
     };
 
+    const handleNext = () => {
+        let newDate = currentDate;
+        newDate.setDate(newDate.getDate() + 1);
+        setCurrentDate(newDate);
+        setRefresh(true);
+    };
+    
+    const handleBack = () => {
+        let newDate = currentDate;
+        newDate.setDate(newDate.getDate() - 1);
+        setCurrentDate(newDate);
+        setRefresh(true);
+    };
+
     if (!data) {
         return <p>Loading...</p>;
     }
@@ -216,6 +237,35 @@ export default function Food () {
     return (
         <Layout title="Dashboard">
             <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+                <Paper sx={{ flex: 1, mx: 5, py: 3, mb: 2}} key="DateNav">
+                    <Typography
+                        sx={{ flex: '1 1 100%', fontWeight: 'bold' }}
+                        variant="h6"
+                        id="tableTitle"
+                        component="div"
+                        align="center"
+                    >
+                        <Button size="small" onClick={handleBack} sx={{ mr: 1, fontWeight: 'bold'}}>
+                            {theme.direction === 'rtl' ? (
+                                <KeyboardArrowRight />
+                            ) : (
+                                <KeyboardArrowLeft />
+                            )}
+                            Back
+                        </Button>
+                        {` `}
+                        {currentDate.toLocaleDateString('en-US', { year: "numeric", month: "short", day: "numeric"})}
+                        {` `}
+                        <Button size="small" onClick={handleNext} sx={{ ml: 1, fontWeight: 'bold'}}>
+                            Next
+                            {theme.direction === 'rtl' ? (
+                                <KeyboardArrowLeft />
+                            ) : (
+                                <KeyboardArrowRight />
+                            )}
+                        </Button>
+                    </Typography>
+                </Paper>
                 { getTableSection(data) }
             </Container>
         </Layout>

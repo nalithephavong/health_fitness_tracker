@@ -39,7 +39,7 @@ export default function DeleteDialog(props:DeleteDialogProps) {
                 aria-labelledby="delete-dialog-title"
                 aria-describedby="delete-dialog-description"
             >
-                <DialogTitle id="delete-dialog-title">
+                <DialogTitle id="delete-dialog-title" sx={{ fontWeight: 'bold' }}>
                 {title}
                 </DialogTitle>
                 <DialogContent>
@@ -48,7 +48,7 @@ export default function DeleteDialog(props:DeleteDialogProps) {
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleDelete} autoFocus>Delete</Button>
+                <Button onClick={handleDelete} autoFocus variant='contained'>Delete</Button>
                 <Button onClick={handleClose}>
                     Cancel
                 </Button>

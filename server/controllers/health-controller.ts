@@ -23,6 +23,7 @@ export interface UpdateRecordRequest extends Request {
         amount: number;
         serving: string;
         status: string;
+        calories: number;
     }
 }
 
@@ -31,6 +32,8 @@ let RECORDS: Record[] = records;
 
 // #region MAIN FUNCTIONS
 export const getRecords = (req: Request, res: Response, next: NextFunction) => {
+    const currentDate = req.query.datestring;
+
     let formattedRecs: MealTypes = {
         breakfast: [],
         lunch: [],
@@ -43,7 +46,7 @@ export const getRecords = (req: Request, res: Response, next: NextFunction) => {
     Meals.forEach((meal) => {
         let mealRecords = [];
         mealRecords = RECORDS.filter((record) => {
-            return record.meal === meal;
+            return record.meal === meal && record.date === currentDate;
         });
 
         if (mealRecords) formattedRecs[meal as keyof MealTypes] = mealRecords;
@@ -115,8 +118,10 @@ export const updateRecord = (req: UpdateRecordRequest, res: Response, next: Next
         return record.id === id;
     });
 
-    const status = req.body.status;
-    RECORDS[recordIdx].status = status;
+    RECORDS[recordIdx].status = req.body.status;
+    RECORDS[recordIdx].serving = req.body.serving;
+    RECORDS[recordIdx].amount = req.body.amount;
+    RECORDS[recordIdx].calories = req.body.calories;
 
     return res.status(200).json({
         message: `Record ${id} updated.`
@@ -124,8 +129,8 @@ export const updateRecord = (req: UpdateRecordRequest, res: Response, next: Next
 }
 
 export const searchFoods = (req: Request, res: Response, next: NextFunction) => {
-    let url = process.env.API_URL + "foods/search";
-    let query = req.params.query;
+    const url = process.env.API_URL + "foods/search";
+    const query = req.query.querystring;
 
     axios.get(url, {
         params: {

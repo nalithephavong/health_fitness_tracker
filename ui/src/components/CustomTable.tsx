@@ -11,7 +11,8 @@ import {
   Paper,
   Checkbox,
   Chip,
-  ChipPropsColorOverrides
+  ChipPropsColorOverrides,
+  Typography
 } from '@mui/material';
 import { OverridableStringUnion } from '@mui/types';
 
@@ -105,6 +106,7 @@ export default function CustomTable(props:CustomTableProps) {
   const [selectedDetail, setSelectedDetail] = useState<RowType[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(15);
+  const [total, setTotal] = useState(0);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -178,8 +180,15 @@ export default function CustomTable(props:CustomTableProps) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const visibleRows = useMemo(
-    () =>
-      rows.sort(getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    () => {
+      let newTotal = 0;
+      rows.forEach((row) => {
+        newTotal += parseInt(row.calories ?? "0"); 
+      });
+      setTotal(newTotal);
+
+      return rows.sort(getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    },
     [order, orderBy, page, rowsPerPage, rows],
   );
 
@@ -251,6 +260,31 @@ export default function CustomTable(props:CustomTableProps) {
                   }}
                 >
                   <TableCell colSpan={6} key="CustomEmptyCell" />
+                </TableRow>
+              )}
+              {visibleRows.length > 0 && (
+                <TableRow>
+                  <TableCell colSpan={3}/>
+                  <TableCell colSpan={1}>
+                    <Typography
+                      sx={{ flex: '1 1 100%', fontWeight: 'bold' }}
+                      variant="subtitle1"
+                      id="totalLabel"
+                      component="div"
+                    >
+                      Total
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Typography
+                      sx={{ flex: '1 1 100%', fontWeight: 'bold' }}
+                      variant="subtitle1"
+                      id="totalLabel"
+                      component="div"
+                    >
+                      {total}
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>

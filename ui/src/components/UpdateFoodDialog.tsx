@@ -10,77 +10,58 @@ import {
     DialogTitle,
     MenuItem
 } from '@mui/material';
+import { RowType, StatusType } from '@/templates/Interfaces';
 
-import { StatusType } from '@/templates/Interfaces';
-import SearchFoodsDialog from './SearchFoodsDialog';
-
-interface AddFoodDialogProps {
+interface UpdateFoodDialogProps {
+    selected: string[];
     showDialog: boolean;
     setShowDialog: (value:boolean) => void;
     callbackFn: (value:unknown) => void;
-    tableID: string;
-    tableTitle: string;
     title: string;
     description: string;
-    fields: {id: string, label: string, type: string}[];
     statusOpts: StatusType[];
+    fields: {id: string, label: string, type: string}[];
+    selectedDetail: RowType[];
 }
 
 type DataType = {
-    [key:string]: string | number;
+    [key:string]: string;
 }
 
-type FoodRecord = {
-    fdcId: number;
-    description: string;
-    brandName: string;
-    servingSize: number;
-    servingSizeUnit: string;
-    foodNutrients: FoodNutrients[];
-}
-
-type FoodNutrients = {
-    nutrientId: number;
-    unitName: string;
-    value: number;
-}
-
-export default function AddFoodDialog(props:AddFoodDialogProps) {
-    const { showDialog, setShowDialog, callbackFn, title, description, statusOpts, tableID, tableTitle } = props;
-    const [status, setStatus] = useState(statusOpts[0]?.id ?? "");
-    const [showSearch, setShowSearch] = useState(false);
-    const [calories, setCalories] = useState(0);
-    const [name, setName] = useState("");
-    const [serving, setServing] = useState("");
-    const [amount, setAmount] = useState(0);
-
-    const clearData = () => {
-        setCalories(0);
-        setName("");
-        setServing("");
-        setAmount(0);
-    };
-
-    const createData = ():DataType => {
-        return ({
-            "meal": tableID,
-            "name": name,
-            "serving": serving,
-            "amount": amount,
-            "calories": calories,
-            "status": status
-        });
-    };
+export default function UpdateFoodDialog(props:UpdateFoodDialogProps) {
+    const { 
+        selected, 
+        selectedDetail, 
+        showDialog, 
+        setShowDialog, 
+        callbackFn, 
+        title, 
+        description, 
+        statusOpts, 
+        fields 
+    } = props;
+    const [status, setStatus] = useState(selectedDetail[0]?.status ?? statusOpts[0]?.id);
+    const [amount, setAmount] = useState<number>(parseFloat(selectedDetail[0]?.amount ?? "0"));
+    const [serving, setServing] = useState(selectedDetail[0]?.serving);
+    const [calories, setCalories] = useState<number>(parseFloat(selectedDetail[0]?.calories ?? "0"));
 
     const handleClose = () => {
-        clearData();
         setShowDialog(false);
     };
 
-    const handleAdd = () => {
-        const newData = createData();
-        callbackFn(newData);
-        clearData();
+    const handleUpdate = () => {
+        const newData = {
+            status,
+            amount,
+            serving,
+            calories
+        };
+
+        callbackFn( { 
+            data: newData, 
+            selected 
+        }
+        );
         setShowDialog(false);
     };
 
@@ -97,11 +78,6 @@ export default function AddFoodDialog(props:AddFoodDialogProps) {
             return;
         }
 
-        if (id === "name") {
-            setName(newValue);
-            return;
-        }
-
         if (id === "serving") {
             setServing(newValue);
             return;
@@ -112,45 +88,21 @@ export default function AddFoodDialog(props:AddFoodDialogProps) {
         setStatus(event.target.value);
     };
 
-    const handleSearchReturn = (selectedItem:FoodRecord) => {
-        if (Object.entries(selectedItem).length > 0) {
-            setName(selectedItem.description);
-            setServing(selectedItem.servingSizeUnit);
-            setAmount(selectedItem.servingSize);
-            const calorieRecord = selectedItem.foodNutrients.find((nutrient) => nutrient.nutrientId === 1008);
-            setCalories(calorieRecord?.value ?? 0);
-        }
-
-        setShowSearch(false);
-    };
-
     return (
         <div>
             <Dialog open={showDialog} onClose={handleClose}>
                 <DialogTitle sx={{ fontWeight: 'bold' }}>{title}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {description} {tableTitle}
+                        {description} {selectedDetail[0]?selectedDetail[0].name:""}?
                     </DialogContentText>
-                    <TextField
-                        key="name"
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Name"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        onChange={handleChange}
-                        value={name}
-                    />
                     <TextField
                         key="amount"
                         autoFocus
                         margin="dense"
                         id="amount"
                         label="Amount"
-                        type="text"
+                        type="number"
                         fullWidth
                         variant="standard"
                         onChange={handleChange}
@@ -203,15 +155,10 @@ export default function AddFoodDialog(props:AddFoodDialogProps) {
                     }
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleAdd} autoFocus variant='contained'>Add</Button>
-                    <Button onClick={() => setShowSearch(true)} >Search</Button>
+                    <Button onClick={handleUpdate} autoFocus variant='contained'>Update</Button>
                     <Button onClick={handleClose}>Cancel</Button>
                 </DialogActions>
             </Dialog>
-            <SearchFoodsDialog 
-                open={showSearch} 
-                onClose={(selected) => handleSearchReturn(selected as FoodRecord)}
-            />
         </div>
     );
 }

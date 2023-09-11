@@ -8,7 +8,7 @@ import {
 } from '../controllers/health-controller';
 
 const router = Router();
-router.get('/search/:query', searchFoods);
+router.get('/search', searchFoods);
 router.post('/', createRecord);
 router.get('/', getRecords);
 router.patch('/:id', updateRecord);

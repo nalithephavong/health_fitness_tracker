@@ -8,7 +8,7 @@ import {
     IconButton
 } from "@mui/material";
 import { 
-    AddCircleOutline as AddIcon,
+    AddCircle as AddIcon,
     Delete as DeleteIcon,
     Edit as UpdateIcon
 } from '@mui/icons-material';
@@ -16,7 +16,7 @@ import {
 import { RowType, StatusType, ToolbarActions } from '@/templates/Interfaces';
 import DeleteDialog from './DeleteDialog';
 import AddFoodDialog from './AddFoodDialog';
-import UpdateDialog from './UpdateDialog';
+import UpdateFoodDialog from './UpdateFoodDialog';
 
 interface TableToolbarProps {
     tableID: string;
@@ -70,10 +70,12 @@ export default function TableToolbar(props: TableToolbarProps) {
 
     const getToolbarActions = (toolbarActions:ToolbarActions[], selected:string[]) => {
       const items = toolbarActions.map((action,index) => {
+          if (selected.length > 1 && action.name === "Update") return;
+          
           return (
             <React.Fragment key={index}>
               <Tooltip title={action.tooltip} key={index}>
-                <IconButton id={action.name} onClick={(event) => setShow(event)}>
+                <IconButton id={action.name} onClick={(event) => setShow(event)} color="warning">
                   {Icons[action.icon]}
                 </IconButton>
               </Tooltip>
@@ -109,7 +111,7 @@ export default function TableToolbar(props: TableToolbarProps) {
                     }} 
                   />
                 ) : action.name === "Update" ? (
-                  <UpdateDialog
+                  <UpdateFoodDialog
                     key={`${index}-UpdateDialog`} 
                     title={action.title}
                     description={action.description}
@@ -123,7 +125,6 @@ export default function TableToolbar(props: TableToolbarProps) {
                       action.callback(data);
                       callback();
                     }}
-                    first 
                   />
                 ) : null
               }
@@ -157,7 +158,7 @@ export default function TableToolbar(props: TableToolbarProps) {
           </Typography>
         ) : (
           <Typography
-            sx={{ flex: '1 1 100%' }}
+            sx={{ flex: '1 1 100%', fontWeight: 'bold' }}
             variant="h6"
             id="tableTitle"
             component="div"

@@ -9,16 +9,16 @@ const defaultTheme = createTheme({
             main: "#D4D4D4"
         },
         warning: {
-            main: "#f9cb99",
+            main: "#EEA948",
         },
         success: {
-            main: "#89dcfb"
+            main: "#C5EA87"
         },
         error: {
             main: "#ffa99f"
         },
         info: {
-            main: "#f0efda"
+            main: "#89dcfb"
         }
       },
 });

@@ -12,6 +12,7 @@ const records_2 = require("../data/records");
 let RECORDS = records_1.default;
 // #region MAIN FUNCTIONS
 const getRecords = (req, res, next) => {
+    const currentDate = req.query.datestring;
     let formattedRecs = {
         breakfast: [],
         lunch: [],
@@ -23,7 +24,7 @@ const getRecords = (req, res, next) => {
     records_2.Meals.forEach((meal) => {
         let mealRecords = [];
         mealRecords = RECORDS.filter((record) => {
-            return record.meal === meal;
+            return record.meal === meal && record.date === currentDate;
         });
         if (mealRecords)
             formattedRecs[meal] = mealRecords;
@@ -74,16 +75,18 @@ const updateRecord = (req, res, next) => {
     const recordIdx = RECORDS.findIndex((record) => {
         return record.id === id;
     });
-    const status = req.body.status;
-    RECORDS[recordIdx].status = status;
+    RECORDS[recordIdx].status = req.body.status;
+    RECORDS[recordIdx].serving = req.body.serving;
+    RECORDS[recordIdx].amount = req.body.amount;
+    RECORDS[recordIdx].calories = req.body.calories;
     return res.status(200).json({
         message: `Record ${id} updated.`
     });
 };
 exports.updateRecord = updateRecord;
 const searchFoods = (req, res, next) => {
-    let url = process.env.API_URL + "foods/search";
-    let query = req.params.query;
+    const url = process.env.API_URL + "foods/search";
+    const query = req.query.querystring;
     axios_1.default.get(url, {
         params: {
             api_key: process.env.API_KEY,

@@ -33,12 +33,12 @@ type FoodNutrients = {
     value: number;
 }
 
-export interface SearchDialogProps {
+export interface SearchFoodsDialogProps {
     open: boolean;
     onClose: (value: object) => void;
 }
 
-export default function SearchFoodsDialog(props: SearchDialogProps) {
+export default function SearchFoodsDialog(props: SearchFoodsDialogProps) {
     const { onClose, open } = props;
     const [query, setQuery] = useState("");
     const [data, setData] = useState<FoodRecord[]>([]);
@@ -58,7 +58,7 @@ export default function SearchFoodsDialog(props: SearchDialogProps) {
     };
 
     const handleSearch = () => {
-        fetch(`${AppConfig.apiUrl}/health/search/${query}`)
+        fetch(`${AppConfig.apiUrl}/health/search?querystring=${query}`)
         .then((res) => {
             return res.json();
         })
@@ -77,7 +77,7 @@ export default function SearchFoodsDialog(props: SearchDialogProps) {
 
     return (
         <Dialog onClose={handleClose} open={open}>
-            <DialogTitle>Search</DialogTitle>
+            <DialogTitle sx={{ fontWeight: 'bold' }}>Search</DialogTitle>
             <DialogContent>
                 <TextField
                         autoFocus
@@ -123,7 +123,7 @@ export default function SearchFoodsDialog(props: SearchDialogProps) {
                 </List>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleSearch} autoFocus>Search</Button>
+                <Button onClick={handleSearch} autoFocus variant='contained'>Search</Button>
                 <Button onClick={handleClose}>Cancel</Button>
             </DialogActions>
         </Dialog>
