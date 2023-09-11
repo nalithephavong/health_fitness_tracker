@@ -7,7 +7,7 @@ export class Record {
     amount: number;
     serving: string;
     meal: string;
-    user: string;
+    username: string;
     constructor (
         date: string,
         id: number,
@@ -17,7 +17,7 @@ export class Record {
         amount: number,
         serving: string,
         meal: string,
-        user: string
+        username: string
     ) {
       this.date = date;
       this.id = id;
@@ -27,6 +27,6 @@ export class Record {
       this.amount = amount;
       this.serving = serving;
       this.meal = meal;
-      this.user = user;
+      this.username = username;
     }
 }

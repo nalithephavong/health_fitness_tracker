@@ -85,6 +85,7 @@ interface CustomTableProps {
   statusOpts: StatusType[];
   componentCallback: () => void;
   dense: boolean;
+  date: string;
 }
 
 export default function CustomTable(props:CustomTableProps) {
@@ -98,7 +99,8 @@ export default function CustomTable(props:CustomTableProps) {
     selectedToolbarActions, 
     statusOpts,
     componentCallback,
-    dense
+    dense,
+    date
   } = props;
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState(defaultOrderBy);
@@ -205,6 +207,7 @@ export default function CustomTable(props:CustomTableProps) {
           callback={handleToolbarActions}
           statusOpts={statusOpts}
           selectedDetail={selectedDetail}
+          date={date}
         />
         <TableContainer>
           <Table

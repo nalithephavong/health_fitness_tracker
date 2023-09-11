@@ -24,6 +24,7 @@ interface AddFoodDialogProps {
     description: string;
     fields: {id: string, label: string, type: string}[];
     statusOpts: StatusType[];
+    date: string;
 }
 
 type DataType = {
@@ -46,7 +47,17 @@ type FoodNutrients = {
 }
 
 export default function AddFoodDialog(props:AddFoodDialogProps) {
-    const { showDialog, setShowDialog, callbackFn, title, description, statusOpts, tableID, tableTitle } = props;
+    const { 
+        showDialog, 
+        setShowDialog, 
+        callbackFn, 
+        title, 
+        description, 
+        statusOpts, 
+        tableID, 
+        tableTitle,
+        date
+    } = props;
     const [status, setStatus] = useState(statusOpts[0]?.id ?? "");
     const [showSearch, setShowSearch] = useState(false);
     const [calories, setCalories] = useState(0);
@@ -68,7 +79,8 @@ export default function AddFoodDialog(props:AddFoodDialogProps) {
             "serving": serving,
             "amount": amount,
             "calories": calories,
-            "status": status
+            "status": status,
+            "date": date
         });
     };
 

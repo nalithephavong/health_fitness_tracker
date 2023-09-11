@@ -209,6 +209,7 @@ export default function Food () {
                         statusOpts={ordersStatusTypes}
                         componentCallback={() => {setRefresh(true);}}
                         dense={false}
+                        date={currentDate.toISOString().split('T')[0] ?? ""}
                     />
                 </Paper>
             )

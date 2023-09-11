@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
 
-import { Record } from '../models/health-model';
-import records from '../data/records';
 import { Meals, MealTypes } from '../data/records';
+import itemsPool from '../db/DBConfig';
 
 export interface CreateRecordRequest extends Request {
     body: {
@@ -14,7 +13,7 @@ export interface CreateRecordRequest extends Request {
         amount: number;
         serving: string;
         meal: string;
-        user: string;
+        username: string;
     }
 }
 
@@ -27,11 +26,8 @@ export interface UpdateRecordRequest extends Request {
     }
 }
 
-// initialize with base data, edit dataset under /data
-let RECORDS: Record[] = records;
-
 // #region MAIN FUNCTIONS
-export const getRecords = (req: Request, res: Response, next: NextFunction) => {
+export const getRecords = async (req: Request, res: Response, next: NextFunction) => {
     const currentDate = req.query.datestring;
 
     let formattedRecs: MealTypes = {
@@ -43,21 +39,27 @@ export const getRecords = (req: Request, res: Response, next: NextFunction) => {
         snack3: []
     };
 
-    Meals.forEach((meal) => {
-        let mealRecords = [];
-        mealRecords = RECORDS.filter((record) => {
-            return record.meal === meal && record.date === currentDate;
+    try {
+        const records = await itemsPool.query( `SELECT * FROM items WHERE date='${currentDate}'`);
+        Meals.forEach((meal) => {
+            let mealRecords = [];
+            mealRecords = records.rows.filter((record) => {
+                return record.meal === meal;
+            });
+    
+            if (mealRecords) formattedRecs[meal as keyof MealTypes] = mealRecords;
         });
 
-        if (mealRecords) formattedRecs[meal as keyof MealTypes] = mealRecords;
-    })
-
-    return res.status(200).json({
-        "records": formattedRecs
-    });
+        return res.status(200).json({
+            "records": formattedRecs
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: err});
+    }
 }
 
-export const createRecord = (req: CreateRecordRequest, res: Response, next: NextFunction) => {
+export const createRecord = async (req: CreateRecordRequest, res: Response, next: NextFunction) => {
     if (!req.body.name) {
         return res.status(400).json({
             message: 'Invalid field.'
@@ -70,62 +72,51 @@ export const createRecord = (req: CreateRecordRequest, res: Response, next: Next
         });
     }
 
-    const recordDate = (new Date()).toISOString().split('T')[0];
+    const username = req.body.username ?? "User1";
+    const { date, name, calories, status, amount, serving, meal } = req.body;
 
-    const previousRecord = RECORDS.reduce((prev, current) => {
-        return (prev.id > current.id) ? prev : current
-    });
+    try {
+        const command = `INSERT INTO items (name, calories, date, status, amount, serving, meal, username)
+            VALUES ('${name}', ${calories}, '${date}', '${status}', ${amount}, '${serving}', '${meal}', '${username}')`;
+        const records = await itemsPool.query(command);
+        return res.status(201).json({
+            message: `Record created.`,
+            record: records
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: err});
+    }
+}
 
-    const nextRecordNumber = previousRecord.id + 1;
-    const userName = req.body.user || "User1";
-
-    const newRecord = new Record (
-        recordDate,
-        nextRecordNumber,
-        req.body.name,
-        req.body.calories,
-        req.body.status,
-        req.body.amount,
-        req.body.serving,
-        req.body.meal,
-        userName
-    );
-
-    RECORDS.push(newRecord);
+export const deleteRecord = async (req: Request, res: Response, next: NextFunction) => {
+    const id = parseInt(req.params.id);
     
-    return res.status(201).json({
-        message: `Record ${nextRecordNumber} created.`,
-        record: newRecord
-    });
+    try {
+        await itemsPool.query( `DELETE FROM items WHERE id=${id}`);
+        res.status(200).json({
+            message: `Record ${id} deleted.`
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: err});
+    }
 }
 
-export const deleteRecord = (req: Request, res: Response, next: NextFunction) => {
+export const updateRecord = async (req: UpdateRecordRequest, res: Response, next: NextFunction) => {
     const id = parseInt(req.params.id);
-    const newRecords = RECORDS.filter((record) => {
-        return record.id !== id;
-    });
-
-    RECORDS = newRecords;
-
-    res.status(200).json({
-        message: `Record ${id} deleted.`
-    });
-}
-
-export const updateRecord = (req: UpdateRecordRequest, res: Response, next: NextFunction) => {
-    const id = parseInt(req.params.id);
-    const recordIdx = RECORDS.findIndex((record) => {
-        return record.id === id;
-    });
-
-    RECORDS[recordIdx].status = req.body.status;
-    RECORDS[recordIdx].serving = req.body.serving;
-    RECORDS[recordIdx].amount = req.body.amount;
-    RECORDS[recordIdx].calories = req.body.calories;
-
-    return res.status(200).json({
-        message: `Record ${id} updated.`
-    });
+    const { calories, status, amount, serving } = req.body;
+    
+    try {
+        const command = `UPDATE items SET status='${status}', amount=${amount}, serving='${serving}', calories=${calories}`;
+        await itemsPool.query(command);
+        return res.status(200).json({
+            message: `Record ${id} updated.`
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: err});
+    }
 }
 
 export const searchFoods = (req: Request, res: Response, next: NextFunction) => {

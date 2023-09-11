@@ -28,6 +28,7 @@ interface TableToolbarProps {
     callback: () => void;
     statusOpts: StatusType[];
     selectedDetail: RowType[];
+    date: string;
 }
 
 type IconsType = {
@@ -50,7 +51,8 @@ export default function TableToolbar(props: TableToolbarProps) {
       selected, 
       selectedDetail, 
       callback, 
-      statusOpts 
+      statusOpts,
+      date
     } = props;
     const [showDelete, setShowDelete] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
@@ -105,6 +107,7 @@ export default function TableToolbar(props: TableToolbarProps) {
                     setShowDialog={setShowAdd}
                     fields={action.fields}
                     statusOpts={statusOpts}
+                    date={date}
                     callbackFn={(data) => {
                       action.callback(data);
                       callback();

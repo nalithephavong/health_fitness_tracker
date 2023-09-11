@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Record = void 0;
 class Record {
-    constructor(date, id, name, calories, status, amount, serving, meal, user) {
+    constructor(date, id, name, calories, status, amount, serving, meal, username) {
         this.date = date;
         this.id = id;
         this.name = name;
@@ -11,7 +11,7 @@ class Record {
         this.amount = amount;
         this.serving = serving;
         this.meal = meal;
-        this.user = user;
+        this.username = username;
     }
 }
 exports.Record = Record;
