@@ -52,7 +52,7 @@ The End:
 
 
 # Roadmap
-- [ ] Add DB
+- [X] Add DB
 - [ ] Secure endpoints
 - [ ] Add user management capabilities (sign-in, sign-out, profile)
 - [ ] Add additional pages (Fitness, Measurements)
