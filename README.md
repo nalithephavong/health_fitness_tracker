@@ -1,8 +1,8 @@
 # About The Project
 WellyBelly Health is a web application built with Next and Express used to track health and wellness metrics.
 - Direct integration via REST to the USDA Food Database (FoodData Central)
-- Installation of a third-party database is not required. Data is stored in a local object on the Express server.
-- Simple interface design: column sorting, intuitive buttons, and paging.
+- Data is stored in a PostgreSQL database
+- Simple interface design: column sorting, intuitive buttons, and paging
 
 For more information on how to build the Express backend, check out my blog post: [Everywhen Software Blog](https://www.everywhensoftware.com/blog/2023-09-01-Simple-Express/)
 
@@ -36,7 +36,7 @@ On startup, the landing page will be displayed. Click the `Sign In` button to en
 From the Food Page, users will have an overview of today's food entries. Food items can be added, deleted, and updated using the toolbar buttons.
 
 <p align="center">
-<img width="800" alt="food" src="https://github.com/nalithephavong/health_fitness_tracker/assets/54182038/0c8a19a6-5a5a-49ea-9a77-15638fc9a6f4">
+<img width="800" alt="food" src="https://github.com/nalithephavong/health_fitness_tracker/assets/54182038/f2dd6bd9-2d1c-4b99-8d51-2f257073bd07">
 </p>
 
 When adding an item, use the search functionality to directly connect to the USDA Food Database to retrieve items:
