@@ -1,28 +1,56 @@
-# Create T3 App
+# About The Project
+WellyBelly Health is a web application built with Next and Express used to track health and wellness metrics.
+- Direct integration via REST to the USDA Food Database (FoodData Central)
+- Installation of a third-party database is not required. Data is stored in a local object on the Express server.
+- Simple interface design: column sorting, intuitive buttons, and paging.
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+For more information on how to build the Express backend, check out my blog post: [Everywhen Software Blog](https://www.everywhensoftware.com/blog/2023-09-01-Simple-Express/)
 
-## What's next? How do I make an app with this?
+Live demo can be found here: [WellyBelly Health Demo](https://welly-belly-ui.onrender.com).
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+> [!IMPORTANT]
+> If the `food` page does not load right away, then the Express server may have gone idle. Click on this link and wait until you get a return message (something like `{"message":"Simple Express Server"}`): [Express Server](https://welly-belly-server.onrender.com/). Then try the demo again.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+# Getting Started
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Prerequisites
+This project requires Node.js version >= 16.
 
-## Learn More
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Installation
+Install dependencies under each subfolder (`server` and `ui`) using the npm command: ```npm install```.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Running The App
+First, start the server by navigating to the `server` subfolder and running: ```npm run dev```.
+Then, run the ui by navigating to the `ui` folder and running: ```npm run dev```.
 
-## How do I deploy this?
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+# Usage
+On startup, the landing page will be displayed. Click the `Sign In` button to enter the website.
+
+<p align="center">
+<img width="700" alt="landing page" src="https://github.com/nalithephavong/manage_orders_sample_app/assets/54182038/899dd8e8-a109-4ef4-abf5-cd954119c4ce">
+</p>
+
+From the Food Page, users will have an overview of today's food entries. Food items can be added, deleted, and updated using the toolbar buttons.
+
+<p align="center">
+<img width="800" alt="orders" src="https://github.com/nalithephavong/manage_orders_sample_app/assets/54182038/05b800ed-e1fd-4e4a-8677-4e1a075c40a9">
+</p>
+
+When adding an item, use the search functionality to directly connect to the USDA Food Database to retrieve items:
+
+
+
+The End: 
+<p align="center">
+<img width="800" alt="meme" src="https://user-images.githubusercontent.com/54182038/161456308-6cecb063-9626-411f-b733-2b99bb17c6d1.gif">
+</p>
+
+
+# Roadmap
+- [ ] Add DB
+- [ ] Secure endpoints
+- [ ] Add user management capabilities (sign-in, sign-out, profile)
+- [ ] Add additional pages (Fitness, Measurements)
