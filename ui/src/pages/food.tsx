@@ -178,7 +178,7 @@ export default function Food () {
     const theme = useTheme();
 
     useEffect(() => {
-        let dateString = currentDate.toISOString().split('T')[0];
+        const dateString = currentDate.toISOString().split('T')[0];
         fetch(`${AppConfig.apiUrl}/health?datestring=${dateString}`)
         .then((res) => {
           return res.json();
@@ -217,14 +217,14 @@ export default function Food () {
     };
 
     const handleNext = () => {
-        let newDate = currentDate;
+        const newDate = currentDate;
         newDate.setDate(newDate.getDate() + 1);
         setCurrentDate(newDate);
         setRefresh(true);
     };
     
     const handleBack = () => {
-        let newDate = currentDate;
+        const newDate = currentDate;
         newDate.setDate(newDate.getDate() - 1);
         setCurrentDate(newDate);
         setRefresh(true);
