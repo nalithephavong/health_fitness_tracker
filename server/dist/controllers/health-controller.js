@@ -93,7 +93,6 @@ const searchFoods = (req, res, next) => {
         }
     })
         .then((response) => {
-        console.log(JSON.stringify(response.data));
         return res.status(200).json(response.data);
     })
         .catch((error) => {

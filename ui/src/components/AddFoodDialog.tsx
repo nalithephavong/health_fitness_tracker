@@ -46,8 +46,8 @@ type FoodNutrients = {
 }
 
 export default function AddFoodDialog(props:AddDialogProps) {
-    const { showDialog, setShowDialog, callbackFn, title, description, fields, statusOpts, tableID, tableTitle } = props;
-    const [status, setStatus] = useState(statusOpts[0]?.id || "");
+    const { showDialog, setShowDialog, callbackFn, title, description, statusOpts, tableID, tableTitle } = props;
+    const [status, setStatus] = useState(statusOpts[0]?.id ?? "");
     const [showSearch, setShowSearch] = useState(false);
     const [calories, setCalories] = useState(0);
     const [name, setName] = useState("");
@@ -85,9 +85,8 @@ export default function AddFoodDialog(props:AddDialogProps) {
     };
 
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        let id = event.target.id;
-        let newValue = event.target.value;
-        console.log(newValue);
+        const id = event.target.id;
+        const newValue = event.target.value;
         if (id === "calories") {
             setCalories(parseInt(newValue));
             return;
@@ -124,7 +123,7 @@ export default function AddFoodDialog(props:AddDialogProps) {
             setServing(selectedItem.servingSizeUnit);
             setAmount(selectedItem.servingSize);
             const calorieRecord = selectedItem.foodNutrients.find((nutrient) => nutrient.nutrientId === 1008);
-            setCalories(calorieRecord?.value || 0);
+            setCalories(calorieRecord?.value ?? 0);
         }
 
         setShowSearch(false);

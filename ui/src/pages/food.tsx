@@ -102,7 +102,7 @@ const ordersSelectedToolbarActions: ToolbarActions[] = [
         ],
         callback: (param) => {
             const { data, selected } = param as UpdateType;
-            (selected as string[]).forEach((id) => { 
+            selected.forEach((id) => { 
                 fetch(`${AppConfig.apiUrl}/health/${id}`, { 
                     method:"PATCH",
                     headers: {'Content-Type': 'application/json'}, 
@@ -177,7 +177,7 @@ export default function Food () {
           return res.json();
         })
         .then((json) => {
-          let records = json.records as DataType;
+          const records = json.records as DataType;
           setData(records); 
           setRefresh(false);
         })
@@ -188,7 +188,7 @@ export default function Food () {
       }, [refresh]);
 
     const getTableSection = (data: DataType) => {
-        let items = tableSections.map((table) => {
+        const items = tableSections.map((table) => {
             return (
                 <Paper sx={{ mx: 5 }} key={table.id}>
                     <CustomTable

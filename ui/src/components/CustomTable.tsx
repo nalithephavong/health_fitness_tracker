@@ -49,7 +49,7 @@ const getTableCells = (row:RowType, headers: HeaderCellType[],statusOpts: Status
 
   headers.forEach((header) => {
     header.id == "status"? (
-      items.push(<TableCell align="right" key={header.id}>{getRowStatus(row[header.id] || "", statusOpts)}</TableCell>)
+      items.push(<TableCell align="right" key={header.id}>{getRowStatus(row[header.id] ?? "", statusOpts)}</TableCell>)
     ):(
       items.push(<TableCell align="right" key={header.id}>{row[header.id]}</TableCell>)
     )
@@ -166,7 +166,7 @@ export default function CustomTable(props:CustomTableProps) {
   // };
 
   const handleToolbarActions = () => {
-    let newSelected: string[] = [];
+    const newSelected: string[] = [];
     setSelected(newSelected);
     setSelectedDetail([]);
     componentCallback();

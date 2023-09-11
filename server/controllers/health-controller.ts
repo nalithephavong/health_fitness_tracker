@@ -136,7 +136,6 @@ export const searchFoods = (req: Request, res: Response, next: NextFunction) => 
         }
     })
     .then((response) => {
-        console.log(JSON.stringify(response.data));
         return res.status(200).json(response.data);
     })
     .catch((error) => {

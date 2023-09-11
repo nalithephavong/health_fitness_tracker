@@ -31,7 +31,7 @@ type DataType = {
 
 export default function UpdateDialog(props:UpdateDialogProps) {
     const { selected, selectedDetail, showDialog, setShowDialog, callbackFn, title, description, statusOpts, fields, first } = props;
-    const [status, setStatus] = useState(statusOpts[0]?.id || "");
+    const [status, setStatus] = useState(statusOpts[0]?.id ?? "");
     const [data, setData] = useState<DataType>({});
 
     let itemsToUpdate = selected;
@@ -46,8 +46,8 @@ export default function UpdateDialog(props:UpdateDialogProps) {
     };
 
     const handleUpdate = () => {
-        let newData = data;
-        newData["status"] = status;
+        const newData = data;
+        newData.status = status;
 
         callbackFn( { 
             data: newData, 
@@ -58,9 +58,9 @@ export default function UpdateDialog(props:UpdateDialogProps) {
     };
 
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        let id = event.target.id;
-        let newValue = event.target.value;
-        let newData = data;
+        const id = event.target.id;
+        const newValue = event.target.value;
+        const newData = data;
         newData[id] = newValue;
         setData(newData);
     };

@@ -29,7 +29,7 @@ export default function SignInSide() {
     //   email: data.get('email'),
     //   password: data.get('password'),
     // });
-    router.push(AppConfig.nav_bar_pages[0]?.link || "/");
+    router.push(AppConfig.nav_bar_pages[0]?.link ?? "/");
   };
 
   return (
@@ -113,7 +113,7 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
+              <Copyright />
             </Box>
           </Box>
         </Grid>
