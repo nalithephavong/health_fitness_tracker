@@ -30,7 +30,7 @@ Then, run the ui by navigating to the `ui` folder and running: ```npm run dev```
 On startup, the landing page will be displayed. Click the `Sign In` button to enter the website.
 
 <p align="center">
-<img width="700" alt="landing page" src="https://github.com/nalithephavong/health_fitness_tracker/assets/54182038/b24f24f9-d83c-48e7-aff2-7f62534da162">
+<img width="800" alt="landing page" src="https://github.com/nalithephavong/health_fitness_tracker/assets/54182038/b24f24f9-d83c-48e7-aff2-7f62534da162">
 </p>
 
 From the Food Page, users will have an overview of today's food entries. Food items can be added, deleted, and updated using the toolbar buttons.
