@@ -66,15 +66,9 @@ const ordersToolbarActions: ToolbarActions[] = [
     {
       name: "Add",
       title: "Add New Food",
-      description: "",
+      description: "Meal: ",
       icon: "AddIcon",
-      fields: [
-        { id: "meal", label: "Meal", type: "text" },
-        { id: "name", label: "Name", type: "text" },
-        { id: "amount", label: "Amount", type: "number" },
-        { id: "serving", label: "Serving", type: "text" },
-        { id: "calories", label: "Calories", type: "number" },
-      ],
+      fields: [],
       callback: (param) => {
         fetch(`${AppConfig.apiUrl}/health`, { 
             method:"POST",
@@ -197,7 +191,8 @@ export default function Food () {
         let items = tableSections.map((table) => {
             return (
                 <Paper sx={{ mx: 5 }} key={table.id}>
-                    <CustomTable 
+                    <CustomTable
+                        tableID={table.id} 
                         tableTitle={table.label}
                         rows={data[table.id as keyof DataType]}
                         headerCells={tableHeader}

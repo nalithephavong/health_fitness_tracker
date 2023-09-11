@@ -74,6 +74,7 @@ const getRowStatus = (status:string, statusOpts: StatusType[]) => {
 //#endregion
 
 interface CustomTableProps {
+  tableID: string;
   tableTitle: string;
   rows: RowType[];
   headerCells: HeaderCellType[];
@@ -86,7 +87,8 @@ interface CustomTableProps {
 }
 
 export default function CustomTable(props:CustomTableProps) {
-  const { 
+  const {
+    tableID, 
     tableTitle,
     rows, 
     headerCells, 
@@ -184,7 +186,8 @@ export default function CustomTable(props:CustomTableProps) {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <TableToolbar 
+        <TableToolbar
+          tableID={tableID} 
           numSelected={selected.length} 
           title={tableTitle} 
           toolbarActions={toolbarActions} 

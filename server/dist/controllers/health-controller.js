@@ -87,15 +87,16 @@ const searchFoods = (req, res, next) => {
     axios_1.default.get(url, {
         params: {
             api_key: process.env.API_KEY,
-            query: query || ""
+            query: query || "",
+            dataType: "Branded",
+            pageSize: 25
         }
     })
         .then((response) => {
-        console.log(response.data);
-        return res.status(200);
+        console.log(JSON.stringify(response.data));
+        return res.status(200).json(response.data);
     })
         .catch((error) => {
-        console.log(error);
         return res.status(400).json({
             error: `${error}`
         });

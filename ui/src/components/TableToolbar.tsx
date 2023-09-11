@@ -15,10 +15,11 @@ import {
 
 import { RowType, StatusType, ToolbarActions } from '@/templates/Interfaces';
 import DeleteDialog from './DeleteDialog';
-import AddDialog from './AddDialog';
+import AddFoodDialog from './AddFoodDialog';
 import UpdateDialog from './UpdateDialog';
 
 interface TableToolbarProps {
+    tableID: string;
     numSelected: number;
     title: string;
     toolbarActions: ToolbarActions[];
@@ -40,7 +41,17 @@ const Icons:IconsType = {
 };
   
 export default function TableToolbar(props: TableToolbarProps) {
-    const { numSelected, title, toolbarActions, selectedToolbarActions, selected, selectedDetail, callback, statusOpts } = props;
+    const { 
+      tableID,
+      numSelected, 
+      title, 
+      toolbarActions, 
+      selectedToolbarActions, 
+      selected, 
+      selectedDetail, 
+      callback, 
+      statusOpts 
+    } = props;
     const [showDelete, setShowDelete] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
     const [showUpdate, setShowUpdate] = useState(false);
@@ -82,7 +93,9 @@ export default function TableToolbar(props: TableToolbarProps) {
                     }} 
                   />
                 ) : action.name === "Add" ? (
-                  <AddDialog
+                  <AddFoodDialog
+                    tableID={tableID}
+                    tableTitle={title}
                     key={`${index}-AddDialog`} 
                     title={action.title}
                     description={action.description}

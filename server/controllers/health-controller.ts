@@ -130,10 +130,13 @@ export const searchFoods = (req: Request, res: Response, next: NextFunction) => 
     axios.get(url, {
         params: {
             api_key: process.env.API_KEY,
-            query: query || ""
+            query: query || "",
+            dataType: "Branded",
+            pageSize: 25
         }
     })
     .then((response) => {
+        console.log(JSON.stringify(response.data));
         return res.status(200).json(response.data);
     })
     .catch((error) => {
