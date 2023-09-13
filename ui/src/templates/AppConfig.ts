@@ -6,8 +6,8 @@ export const AppConfig = {
     apiUrl: process.env.API_URL ?? 'http://localhost:8000', //change this to point to your api,
     nav_bar_pages: [
         { label: "Food", link: "/food" },
-        { label: "Fitness", link: "" },
-        { label: "Measurements", link: "" },
+        { label: "Fitness", link: "/fitness" },
+        { label: "Measurements", link: "/measurements" },
     ],
     nav_bar_menu: [
         { label: "Profile", link: "" },
