@@ -16,6 +16,7 @@ export interface HeaderCellType {
     id: string;
     label: string;
     numeric: boolean;
+    width: string;
 }
 
 export interface RowType {

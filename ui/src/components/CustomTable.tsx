@@ -50,9 +50,9 @@ const getTableCells = (row:RowType, headers: HeaderCellType[],statusOpts: Status
 
   headers.forEach((header) => {
     header.id == "status"? (
-      items.push(<TableCell align="right" key={header.id}>{getRowStatus(row[header.id] ?? "", statusOpts)}</TableCell>)
+      items.push(<TableCell padding={header.disablePadding ? 'none' : 'normal'} align={header.numeric ? 'right' : 'left'} key={header.id}>{getRowStatus(row[header.id] ?? "", statusOpts)}</TableCell>)
     ):(
-      items.push(<TableCell align="right" key={header.id}>{row[header.id]}</TableCell>)
+      items.push(<TableCell padding={header.disablePadding ? 'none' : 'normal'} align={header.numeric ? 'right' : 'left'} key={header.id}>{row[header.id]}</TableCell>)
     )
   });
 

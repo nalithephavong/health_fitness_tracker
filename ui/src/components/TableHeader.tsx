@@ -50,6 +50,7 @@ export default function TableHeader(props: TableHeaderProps) {
               align={headerCell.numeric ? 'right' : 'left'}
               padding={headerCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headerCell.id ? order : false}
+              sx={{ width: headerCell.width }}
             >
               <TableSortLabel
                 active={orderBy === headerCell.id}

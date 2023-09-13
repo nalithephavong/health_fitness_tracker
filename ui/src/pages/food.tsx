@@ -4,6 +4,8 @@ import {
     Paper,
     Typography,
     Button,
+    Box,
+    LinearProgress
 } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -37,33 +39,38 @@ type DataType = {
 const tableHeader: HeaderCellType[] = [
     {
         id: 'name',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
         label: 'Name',
+        width: '25%'
     },
     {
         id: 'amount',
         numeric: true,
         disablePadding: false,
         label: 'Amount',
+        width: '20%'
     },
     {
         id: 'serving',
         numeric: true,
         disablePadding: false,
         label: 'Serving',
+        width: '15%'
     },
     {
         id: 'calories',
         numeric: true,
         disablePadding: false,
         label: 'Calories',
+        width: '20%'
     },
     {
         id: 'status',
         numeric: true,
         disablePadding: false,
         label: 'Status',
+        width: '20%'
     },
 ];
 
@@ -232,7 +239,11 @@ export default function Food () {
     };
 
     if (!data) {
-        return <p>Loading...</p>;
+        return (
+            <Box sx={{ width: '100%' }}>
+                <LinearProgress />
+            </Box>
+        );
     }
 
     return (
